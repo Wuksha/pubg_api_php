@@ -1,6 +1,6 @@
 <?php
 include 'scripts/ChromePhp.php';
-require_once('scripts/API_key.php');
+require_once('scripts/httpReq.php');
 require_once('scripts/matchData.php');
 
 $match = new matchData();
