@@ -1,1 +1,1 @@
-# pubg_api_php
+# Wuksha je gej.
