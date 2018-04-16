@@ -13,7 +13,7 @@ class matchData extends Authorization {
 	public function getData() 
 	{
 		try {
-			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/ab1d316a-4b38-4a68-b359-1c4e19b562eb');
+			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/2600c6e7-3796-415f-8891-f8bfbbd28d32');
 			$json_file = Authorization::httpRequest($api->API_key, $api->api_url);
 			$gameMode = $json_file['data']['attributes']['gameMode'];
 			$mapName = $json_file['data']['attributes']['mapName'];
@@ -21,6 +21,7 @@ class matchData extends Authorization {
 			$createdAt = $json_file['data']['attributes']['createdAt'];
 			ChromePhp::log($gameMode);
 			ChromePhp::log($mapName);
+			ChromePhp::log($json_file);
 			foreach ($json_file['included'] as $key) 
 			{
 				if($key['type'] == 'roster')
@@ -31,12 +32,12 @@ class matchData extends Authorization {
 						foreach ($key['relationships']['participants']['data'] as $key1) 
 						{
 							$roster_arr[$max] += ['ParticipantID '.$o => $key1['id']];
+
 							$o++;
 						}
+						$roster_arr[$max] += ['No' => $o - 1];
 				}
 			}
-			ChromePhp::log($roster_arr);
-			ChromePhp::log($json_file);
 
 
 			foreach ($json_file['included'] as $key) 
@@ -48,19 +49,31 @@ class matchData extends Authorization {
 
 				}
 			}
-			ChromePhp::log($participants_arr);
 
-			foreach ($roster_arr[0] as $key) {
-				foreach ($participants_arr['ParticipantID'] as $key2) {
-					if($key == $key2)
-					{
-						ChromePhp::log("jea");
-					}
-				}
+			$j = 0;
+			foreach ($roster_arr as $rost) 
+			{
+				$l = 1;
+				$w = $rost['ParticipantID 1'];
+				$m = $rost['ParticipantID 2'];
+					foreach ($participants_arr as $part)
+                    {
+                        $u = $part['ParticipantID'];
+                        for($i = 1; $i <= $rost['No']; $i++)
+                            {
+                            if($u == $rost['ParticipantID '.$i])
+                                {
+                                $roster_arr[$j] += ['PlayerName '.$l => $part['PlayerName'], 'PlayerID '.$l => $part['PlayerID'], 'KillsPlayer '.$l => $part['Kills'], 'AssistsPlayer '.$l => $part['Assists'], 'BoostsPlayer '.$l => $part['Boosts'] ];
+                                    $l++;
+                                    break;
+                                }
+                            }
+                    }
+                    $j++;
 			}
-
-
-		}
+			
+			ChromePhp::log($roster_arr);
+			}
 
 		catch(Exception $e)
 		{
