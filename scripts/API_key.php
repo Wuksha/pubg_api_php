@@ -1,81 +1,30 @@
 <?php
- class API {
+require_once("scripts/IRequest.php");
+ class Authorization implements IRequest {
 
-	protected $API_key;
-	protected $api_url;
-	protected $arr = array();
-	protected $roster_arr = array();
-	protected $final = array();
+	public $API_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiY2UxMzQ1MC0xYmM4LTAxMzYtMzRhZC0wMzExMWE4MzhiNmMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTIzMDE5NzcxLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1Ymctc3RhdHMtd2Vic2l0ZSIsInNjb3BlIjoiY29tbXVuaXR5IiwibGltaXQiOjEwfQ.miREOEm4iMfNhTr4aPFWFJ4lgouCU0Q3JUfXPwOHbJc";
+	public $api_url;
 
-	public function __construct($API_key, $api_url)
+
+	public function __construct($api_url)
 	{
-		$this->API_key = $API_key;
 		$this->api_url = $api_url;
 	}
-
-	public function getJSON1() 
+	public function httpRequest($api, $url)
 	{
 		$opts = array(
 		  'http'=>array(
 		    'method'=>"GET",
-		    'header'=>"Authorization:".$this->API_key."\r\n" .
+		    'header'=>"Authorization:".$api."\r\n" .
 		              "Accept: application/vnd.api+json\r\n"
 		  )
 		);
 
 		$context = stream_context_create($opts);
-
-		$file = file_get_contents($this->api_url, false, $context);
+		$file = file_get_contents($url, false, $context);
 		$obj = json_decode($file, true);
-		$i = 0;	
-		foreach ($obj['data']['relationships']['rosters']['data'] as $key) 
-		{
-				$i++;
-				$tmp = [];
-		    	$tmp['Team '.$i] = $key['id'];
-		    	$arr[] = $tmp;
 
-		}
-		ChromePhp::log($obj);
-
-		foreach ($arr as $key => $value) 
-		{
-			#ChromePhp::log($value); 
-		}
+		return $obj;
 	}
-
-		public function getJSON() 
-	{
-		$opts = array(
-		  'http'=>array(
-		    'method'=>"GET",
-		    'header'=>"Authorization:".$this->API_key."\r\n" .
-		              "Accept: application/vnd.api+json\r\n"));
-
-		$context = stream_context_create($opts);
-		$file = file_get_contents($this->api_url, false, $context);
-		$obj = json_decode($file, true);
-		foreach ($obj['included'] as $key) 
-		{
-			if($key['type'] == 'roster')
-			{
-				$roster_arr[] = ['rooster_id' => $key['id'], 'rank' => $key['attributes']['stats']['rank'], 'teamNumber' => $key['attributes']['stats']['teamId']];
-				$max = max(array_keys($roster_arr));
-						foreach ($key['relationships']['participants']['data'] as $key1) {
- 							
-    						$roster_arr[$max] += ['PlayerId' => $key1['id']];
-							ChromePhp::log($key1['id']);
-
-						}
-						ChromePhp::log("\r\n");
-			}
-		}
-		ChromePhp::log($obj);
-		ChromePhp::log($roster_arr);
-echo '<pre>';
-var_dump($roster_arr);
-echo '<pre>';
-
-	}
-	}
+}
 ?>
