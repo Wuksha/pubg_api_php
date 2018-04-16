@@ -1,9 +1,10 @@
 <?php
 include 'scripts/ChromePhp.php';
 require_once('scripts/API_key.php');
+require_once('scripts/matchData.php');
 
-$conn = new API('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiY2UxMzQ1MC0xYmM4LTAxMzYtMzRhZC0wMzExMWE4MzhiNmMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTIzMDE5NzcxLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1Ymctc3RhdHMtd2Vic2l0ZSIsInNjb3BlIjoiY29tbXVuaXR5IiwibGltaXQiOjEwfQ.miREOEm4iMfNhTr4aPFWFJ4lgouCU0Q3JUfXPwOHbJc', 'https://api.playbattlegrounds.com/shards/pc-eu/matches/ab1d316a-4b38-4a68-b359-1c4e19b562eb');
-$conn->getJSON();
+$match = new matchData();
+$match->getData();
 
 
 ?>
