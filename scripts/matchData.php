@@ -15,10 +15,9 @@ class matchData extends Authorization {
 	{
 		try {
 
-			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/2600c6e7-3796-415f-8891-f8bfbbd28d32d');
-			$json_file = Authorization::httpRequest($api->API_key, $api->api_url);
-
-			if(Authorization::$authenticated == true)
+			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/2600c6e7-3796-415f-8891-f8bfbbd28d32');
+			$json_file = $api->httpRequest($api->API_key, $api->api_url);
+			if($api->authenticated == true)
 			{
 				$gameMode = $json_file['data']['attributes']['gameMode'];
 				$mapName = $json_file['data']['attributes']['mapName'];
