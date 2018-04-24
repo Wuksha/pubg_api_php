@@ -1,10 +1,13 @@
 <?php
 include 'scripts/ChromePhp.php';
 require_once('scripts/httpReq.php');
+require_once('scripts/playerData.php');
 require_once('scripts/matchData.php');
-
 $match = new matchData();
 $match->getData();
+
+$player = new playerData();
+$player->getData();
 
 
 ?>
