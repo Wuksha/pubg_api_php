@@ -1,5 +1,5 @@
 <?php
-require_once("scripts/IRequest.php");
+require_once("interfaces/IRequest.php");
  class Authorization implements IRequest {
 
 	public $API_key = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJiY2UxMzQ1MC0xYmM4LTAxMzYtMzRhZC0wMzExMWE4MzhiNmMiLCJpc3MiOiJnYW1lbG9ja2VyIiwiaWF0IjoxNTIzMDE5NzcxLCJwdWIiOiJibHVlaG9sZSIsInRpdGxlIjoicHViZyIsImFwcCI6InB1Ymctc3RhdHMtd2Vic2l0ZSIsInNjb3BlIjoiY29tbXVuaXR5IiwibGltaXQiOjEwfQ.miREOEm4iMfNhTr4aPFWFJ4lgouCU0Q3JUfXPwOHbJc";
@@ -35,8 +35,6 @@ require_once("scripts/IRequest.php");
 				$this->authenticated = true;
 				return $obj;
 				}
-			
-
 		}
 
 		catch(Exception $e)

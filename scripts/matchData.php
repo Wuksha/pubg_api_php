@@ -1,21 +1,21 @@
 <?php
 require_once("httpReq.php");
-class matchData extends Authorization {
+class matchData {
 
 	private $roster_arr = array();
 	private $participants_arr = array();
 	private $match_details = array();
-
-	public function __construct()
+	private $matchID;
+	public function __construct($mdID)
 	{
-
+		$this->matchID = $mdID;
 	}
 
 	public function getData() 
 	{
 		try {
 
-			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/2600c6e7-3796-415f-8891-f8bfbbd28d32');
+			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/'.$this->matchID);
 			$json_file = $api->httpRequest($api->API_key, $api->api_url);
 			if($api->authenticated == true)
 			{
@@ -26,22 +26,25 @@ class matchData extends Authorization {
 				$match_details = ['GameDetails' => ['gameMode' => $gameMode, 'mapName' => $mapName, 'matchDuration' => $match_duration, 'createdAt' => $createdAt]];
 				foreach ($json_file['included'] as $key) 
 				{
+					
 					if($key['type'] == 'roster')
 					{
 						$roster_arr[] = ['Roster' => $key['id'], 'Rank' => $key['attributes']['stats']['rank'], 'teamNumber' => $key['attributes']['stats']['teamId']];
-						$max = max(array_keys($roster_arr));
 						$o = 1;
 							foreach ($key['relationships']['participants']['data'] as $key1) 
 							{
+								$max= max(array_keys($roster_arr));
 								$roster_arr[$max] += ['ParticipantID '.$o => $key1['id']];
-
 								$o++;
 							}
 							$roster_arr[$max] += ['NumberOfPlayers' => $o - 1];
 					}
+					if($key['type'] == 'asset') 
+					{
+						$telemetry_arr = ['matchTelemetry' => ['url' => $key['attributes']['URL'], 'createdAt' => $key['attributes']['createdAt'], 'telemetryID' => $key['id']]];
+						$match_details += $telemetry_arr;
+					}	
 				}
-
-				
 				foreach ($json_file['included'] as $key) 
 				{
 					if($key['type'] == 'participant')
@@ -147,11 +150,9 @@ class matchData extends Authorization {
 	                    
 				}
 				$match_details += $roster_arr;
-				ChromePhp::log($match_details);
 				return $match_details;
 			}
 		}
-
 		catch(Exception $e)
 		{
 			echo $e->getMessage();

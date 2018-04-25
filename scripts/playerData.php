@@ -1,27 +1,26 @@
 <?php
 require_once("httpReq.php");
 
-class playerData extends Authorization {
+class playerData {
 
     private $playerName;
     private $player_matches = array();
 
-    public function __construct()
+    public function __construct($pn)
 	{
-       
+       $this->playerName = $pn;
 	}
 
     public function getData()
     {
         try
         {
-            $api = new Authorization("https://api.playbattlegrounds.com/shards/pc-eu/players?filter[playerNames]=HauntedLollipop");
+            $api = new Authorization("https://api.playbattlegrounds.com/shards/pc-eu/players?filter[playerNames]=".$this->playerName);
             $json_file = $api->httpRequest($api->API_key, $api->api_url);
 
             if($api->authenticated == true)
             {
                 $player_matches = [];
-                ChromePhp::log($json_file);
                 foreach($json_file['data'] as $key)
                 {
                     $o = 1;
@@ -31,7 +30,7 @@ class playerData extends Authorization {
                         $o++;
                     }
                 }
-                ChromePhp::log($player_matches);
+                return $player_matches;
             }
 
             else 
