@@ -1,17 +1,13 @@
 <?php
-include 'scripts/ChromePhp.php';
-require_once('scripts/httpReq.php');
-require_once('scripts/playerData.php');
-require_once('scripts/matchData.php');
-$match = new matchData();
-$match->getData();
-
-$player = new playerData();
-$player->getData();
-
-
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+    if(isset($_POST["submit"]))
+    {
+        $playerName = $_POST['playername'];
+        header("location:playerInfo.php/".$playerName);
+    }
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,15 +19,15 @@ $player->getData();
 </head>
 <body>
     <div id="mainPosition">
-       <!-- <div class = 'info'> <h1>:)</h1> </div>
+       <div class = 'info'> <h1>Search</h1> </div>
         <div>
-            <form class="player-search-form" action = "conn.php">
-                <input class="player-search-form__text" id = "srch" type="text" placeholder=":)" name="userName">
-                <button type="submit" class="player-search-form__button">
+            <form class="player-search-form" method="post">
+                <input class="player-search-form__text" id = "srch" type="text" placeholder="Enter player name" name = "playername">
+                <button type="submit" class="player-search-form__button" name = "submit">
                     <i class="_spSite _spSite-84"></i>
                 </button>
             </form>
-        </div>-->
+        </div>
     </div>
 </body>
 </html>
