@@ -12,7 +12,7 @@ $player = new playerData($playerName);
 $matches_array = $player->getData();
 ChromePhp::log($matches_array);
 
-for($i = 1; $i <= 3; $i++)
+for($i = 1; $i <= 10; $i++)
 {
 
     $match = new matchData($matches_array["Match ".$i]);
