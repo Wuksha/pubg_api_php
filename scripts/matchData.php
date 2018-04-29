@@ -17,6 +17,7 @@ class matchData {
 
 			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/'.$this->matchID);
 			$json_file = $api->httpRequest($api->API_key, $api->api_url);
+			#ChromePhp::log($json_file);
 			if($api->authenticated == true)
 			{
 				$gameMode = $json_file['data']['attributes']['gameMode'];
