@@ -1,0 +1,28 @@
+html, body {
+    height: 100%;
+    background-color: #2C2F33;
+    background-image: url(../Resource/test2.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 100%;
+    font-family: 'Raleway', sans-serif;
+    background-attachment: fixed;
+}
+
+#main {
+    margin-top: 25px;
+    height: 85vh;
+    background-color: rgba(35, 39, 42, 0.5)
+}
+
+nav#navigation {
+    width: 100%;
+    background-color: #23272A !important;
+    position: relative;
+    top: 0;
+    height: 10vh;
+}
+
+.inp {
+    width: 50vh !important;
+}
