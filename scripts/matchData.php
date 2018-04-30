@@ -65,7 +65,7 @@ class matchData {
 						$Assists = $key['attributes']['stats']['assists'];
 						$heals = $key['attributes']['stats']['heals'];
 						$boosts = $key['attributes']['stats']['boosts'];
-						$knocketOut = $key['attributes']['stats']['DBNOs'];
+						$knockedOut = $key['attributes']['stats']['DBNOs'];
 						$deathType = $key['attributes']['stats']['deathType'];
 						$Revives = $key['attributes']['stats']['revives'];
 						$vehicleDriveDistance = $key['attributes']['stats']['rideDistance'];
@@ -92,7 +92,7 @@ class matchData {
 						'Assists' => $Assists, 
 						'Heals' => $heals, 
 						'Boosts' => $boosts, 
-						'Knocked out' => $knocketOut, 
+						'DBNOs' => $knockedOut, 
 						'deathType' => $deathType, 
 						'Revives' => $Revives, 
 						'vehicleDriveDistance' => $vehicleDriveDistance, 
@@ -131,7 +131,7 @@ class matchData {
 									'roadKills' => $part['roadKills'],  
 	                                'Assists' => $part['Assists'], 
 	                                'Boosts' => $part['Boosts'],
-	                                'Knocked out' => $knocketOut, 
+	                                'DBNOs' => $knockedOut, 
 									'deathType' => $deathType, 
 									'Revives' => $Revives, 
 									'vehicleDriveDistance' => $part['vehicleDriveDistance'], 
