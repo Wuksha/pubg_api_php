@@ -22,7 +22,6 @@ $matches_array = $player->getData();
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../css/userInsight.css">
 </head>
 <body>
@@ -61,21 +60,42 @@ $matches_array = $player->getData();
     <div id="cover-caption">
         <div id="main" class="container">
             <div class="row text-white">
-                <div class="col-sm-10 offset-sm-1 text-center">
-                    <h1 class="display-3">PUBG Stats</h1>
-                    <?php 
-            for($i = 1; $i <= 2; $i++):
+                    <?php
+                    function ago($date)
+                    {
+                        $d = $date;
+                        $days = intval($date / 86400)." days ago";
+                        if($days < 1)
+                        {
+                            $days = intval($d/3600)." hours ago";
+                        }
+                        if($days < 1)
+                            {
+                                $days = intval($d/60)." minutes ago";
+                        }
+    
+                            return $days;
+                    }
+            for($i = 1; $i <= 10 ; $i++):
                 $match = new matchData($matches_array["Match ".$i]);
                 $match_deatils = $match->getData();
                 ?>
-                <div class = "match" id = "Match <?php echo $i ?>" >
+                <div class = "match col-lg-6" id = "Match <?php echo $i ?>" >
                 <?php
                 $mode = $match_deatils['GameDetails']['gameMode'];
                 $map = $match_deatils['GameDetails']['mapName'];
                 $started = $match_deatils['GameDetails']['createdAt'];
                 $start_date = substr($started, 0, 10);
                 $started_time = substr($started, 11, 8);
+                $d=strtotime($start_date." ".$started_time);
+                $date = date("Y-m-d H:i:s", $d);
+                date_default_timezone_set(htmlentities($_COOKIE['Zone'], 3, 'UTF-8')); 
+                $currDate = date("Y-m-d H:i:s"); 
+                $datetime1 = strtotime($date);
+                $datetime2 = strtotime($currDate);
+                $secs = $datetime2 - $datetime1;// == <seconds between the two times>
                 $duration = gmdate("i:s", $match_deatils['GameDetails']['matchDuration']);
+                $index = 0;
                 foreach($match_deatils as $key)
                 {
                     if(isset($key['NumberOfPlayers']))
@@ -88,8 +108,10 @@ $matches_array = $player->getData();
                                 if($key['Player '.$o]['PlayerName'] == $playerName)
                                 {
                                     $rank = $key['Rank'];
-                                    GLOBAL $rank;
-                                    break;
+                                    $selectedPlayer = $o;
+                                    $noOfElement = $index - 2;
+                                    GLOBAL $rank, $selectedPlayer, $noOfElement;
+                                    break 2;
                                 }
                             }
                         }
@@ -98,23 +120,49 @@ $matches_array = $player->getData();
                     {
                         
                     }
+                    $index++;
                 }
+                $kills = $match_deatils[$noOfElement]['Player '.$selectedPlayer]['Kills'];
+                $dmg = $match_deatils[$noOfElement]['Player '.$selectedPlayer]['dmgDealt'];
+                $walk_distance = $match_deatils[$noOfElement]['Player '.$selectedPlayer]['walkDistance'];
+                $vehicle_distance = $match_deatils[$noOfElement]['Player '.$selectedPlayer]['vehicleDriveDistance'];
+                $totalDistance = intval($walk_distance + $vehicle_distance);
+                $winRank = intval($match_deatils[$noOfElement]['Player '.$selectedPlayer]['winPointsDelta']);
                 ?>
-                <p><?php echo "Game ".$i." mode: ".$mode; ?> </p>
-                <p><?php echo "Game ".$i." map: ".$map; ChromePhp::log($match_deatils);?> </p>
-                <p><?php echo "Game ".$i." date: ".$start_date;?> </p>
-                <p><?php echo "Game ".$i." time: ".$started_time;?> </p>
-                <p><?php echo "Game ".$i." duration: ".$duration;?> </p>
-                <p><?php echo "Game ".$i." rank: ".$rank;?> </p>
+                <div class = "match-box">
+                <i class="sp__mode sp__mode--2-fpp">
+                <?php 
+                echo "Game ".$i." mode: ".$mode;?>
+                </i>
+                <p class = "match-map">
+                Map: 
+                <a data-toggle="tooltip" title="<img src='<?php if($map == "Erangel_Main") { echo '../Resource/erangel_mini.png';}
+                else if ($map == "Desert_Main") { echo '../Resource/miramar-mini.png';} ?>' />">
+                <span id="<?php if($map == "Erangel_Main") { echo 'map-er';}
+                else if ($map == "Desert_Main") { echo 'map-mi';} ?>"><?php if($map == "Erangel_Main") { echo 'Erangel';}
+                else if ($map == "Desert_Main") { echo 'Miramar';} ?></span></a>
+                </p>
+                <hr>
+                <p class = "matchStart"><?php $hm = ago($secs); echo $hm;?> </p>
                 </div>
-                <br>
+                
+                </div>
             <?php endfor; 
             ?>
                     <br>
                 </div>
-            </div>
         </div>
     </div>
 </section>
+
+<script>
+    $(document).ready(function() {
+        $('a[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom',
+    html: true
+});
+});
+</script>
 </body>
 </html>

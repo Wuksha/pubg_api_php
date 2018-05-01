@@ -74,6 +74,9 @@ if($_SERVER['REQUEST_METHOD'] === 'POST')
         </div>
     </div>
 </section>
+<script>
+document.cookie = "Zone="+Intl.DateTimeFormat().resolvedOptions().timeZone;
+</script>
 </body>
 </html>
 

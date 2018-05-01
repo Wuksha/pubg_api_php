@@ -17,7 +17,6 @@ class matchData {
 
 			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/'.$this->matchID);
 			$json_file = $api->httpRequest($api->API_key, $api->api_url);
-			#ChromePhp::log($json_file);
 			if($api->authenticated == true)
 			{
 				$gameMode = $json_file['data']['attributes']['gameMode'];
@@ -75,13 +74,20 @@ class matchData {
 						$timeSurvived = $key['attributes']['stats']['timeSurvived'];
 						$winPlace = $key['attributes']['stats']['winPlace'];
 						$winPoints = $key['attributes']['stats']['winPoints'];
+						$dmgDealt = $key['attributes']['stats']['damageDealt'];
+						$lastKillPoints = $key['attributes']['stats']['lastKillPoints'];
+						$lastWinPoints = $key['attributes']['stats']['lastWinPoints'];
+						$mostDamage = $key['attributes']['stats']['mostDamage'];
+						$winPointsDelta = $key['attributes']['stats']['winPointsDelta'];
+
+
 
 						$participants_arr[] = [
 						'ParticipantID' => $ParticipantID , 
 						'PlayerName' => $PlayerName, 
 						'PlayerID' => $PlayerId, 
 						'Kills' => $Kills,
-						'Headshot kills' => $Headshotkills, 
+						'headshotKills' => $Headshotkills, 
 						'killsPlace' => $KillsPlace, 
 						'killPoints' => $killPoints, 
 						'killPointsDelta' => $killPointsDelta, 
@@ -101,7 +107,12 @@ class matchData {
 						'weaponsAcquired' => $weaponsAcquired, 
 						'timeSurvived' => $timeSurvived, 
 						'winPlace' => $winPlace, 
-						'winPoints' => $winPoints
+						'winPoints' => $winPoints,
+						'dmgDealt' => $dmgDealt,
+						'lastKillPoints' => $lastKillPoints,
+						'lastWinPoints' => $lastWinPoints,
+						'mostDamage' => $mostDamage,
+						'winPointsDelta' => $winPointsDelta
 						];
 					}
 				}
@@ -121,7 +132,7 @@ class matchData {
 	                                ['PlayerName' => $part['PlayerName'], 
 	                                'PlayerID ' => $part['PlayerID'], 
 	                                'Kills' => $part['Kills'], 
-	                                'Headshot kills' => $part['Headshot kills'], 
+	                                'headshotKills' => $part['headshotKills'], 
 	                                'killsPlace' => $part['killsPlace'], 
 	                                'killPoints' => $part['killPoints'],
 	                                'killPointsDelta' => $part['killPointsDelta'], 
@@ -140,7 +151,13 @@ class matchData {
 									'weaponsAcquired' => $part['weaponsAcquired'], 
 									'timeSurvived' => $part['timeSurvived'], 
 									'winPlace' => $part['winPlace'], 
-									'winPoints' => $part['winPoints']
+									'winPoints' => $part['winPoints'],
+									'dmgDealt' => $part['dmgDealt'],
+									'lastKillPoints' => $part['lastKillPoints'],
+									'lastWinPoints' => $part['lastWinPoints'],
+									'mostDamage' => $part['mostDamage'],
+									'winPointsDelta' => $part['winPointsDelta'],
+									'Heals' => $part['Heals']
 								]];
 	                                    $l++;
 	                                    break;

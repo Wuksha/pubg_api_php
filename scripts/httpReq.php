@@ -1,4 +1,11 @@
 <?php
+/**
+ * Base class Authorization
+ *
+ * @package Authorization
+ * @author Ognjen Kljajic <hlollipop99@gmail.com>
+ */
+
 require_once("interfaces/IRequest.php");
  class Authorization implements IRequest {
 
@@ -11,6 +18,13 @@ require_once("interfaces/IRequest.php");
 	{
 		$this->api_url = $api_url;
 	}
+
+	 /**
+     * Send request for JSON file from server and decodes it
+     *
+     * @param string $api
+     * @return void
+     */
 	public function httpRequest($api, $url)
 	{
 		try {
