@@ -16,7 +16,7 @@ var scale = 1.5;
 var originx = 0;
 var originy = 0;
 var imageObj = new Image(); 
-    imageObj.src = 'Resource/Erangel_Minimap.png';
+    imageObj.src = 'resources/Erangel_Minimap.png';
 
 function draw(){
     // From: http://goo.gl/jypct

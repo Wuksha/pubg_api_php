@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     background-color: #2C2F33;
-    background-image: url(../Resource/test2.jpg);
+    background-image: url(../resources/test2.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 100%;
@@ -12,17 +12,94 @@ html, body {
 #main {
     margin-top: 25px;
     height: 85vh;
-    background-color: rgba(35, 39, 42, 0.5)
+    background-color: rgba(0,0,0, 0.3) !important;
+    border-radius: 5px;
 }
 
-nav#navigation {
-    width: 100%;
-    background-color: #23272A !important;
-    position: relative;
-    top: 0;
-    height: 10vh;
+.navbar-dark {
+    background-color: rgba(0,0,0, 0.3) !important;
 }
 
 .inp {
     width: 50vh !important;
 }
+
+.match-box
+{
+    margin-top:25px;
+    border-radius: 5px;
+    background-color: #2C2F33;
+    z-index: 999999999;
+    color:rgb(246, 246, 246) !important;
+    font-size: 0.85em;
+}
+
+.sp__mode--2-fpp {
+    background-image: url(../resources/tag_duofpp.png);
+    width: 52px;
+    background-size: 52px 16px;
+    display: inline-block;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    line-height: 999px;
+    vertical-align: top;
+    height: 16px;
+    margin-left:10px;
+    margin-top:10px;
+}
+.match-map 
+{
+    margin-left: 10px;
+    margin-top:10px;
+    margin-bottom: 5px;
+    width:20%;
+
+}
+#map-er{
+
+  color: #4AC948 !important;
+}
+
+#map-mi{
+
+   color: #E1A95F !important;
+}
+.matchStart {
+    display: inline-block;
+    margin-top: 5px;
+    margin-left:10px;
+    margin-bottom: 0;
+    width:20%;
+}
+.tooltip-inner {
+    max-width: 320px;
+    /* If max-width does not work, try using width instead */
+    width: 320px;
+    background-color: rgba(0,0,0, 0.3) !important;
+}
+
+.tooltip .tooltip-arrow {background-color: rgba(0,0,0, 0.3) !important;}
+hr {
+    -moz-border-bottom-colors: none;
+    -moz-border-image: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #EEEEEE -moz-use-text-color #FFFFFF;
+    border-style: solid none;
+    border-width: 0.5px 0;
+    margin: 0 0;
+    color:#4c4c4c;
+    width:20%;
+  }
+
+  .matchDuration {
+    display: inline-block;
+      margin-left: 10px;
+      padding-bottom:10px;
+      width:20%;
+  }
+
+  .match__rank {
+      
+  }

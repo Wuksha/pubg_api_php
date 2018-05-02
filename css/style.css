@@ -1,7 +1,7 @@
 html, body {
     height: 100%;
     background-color: #2C2F33;
-    background-image: url(../Resource/test2.jpg);
+    background-image: url(../resources/test2.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 100% 100%;
@@ -11,18 +11,54 @@ html, body {
 
 #main {
     margin-top: 25px;
+    border-radius: 5px;
     height: 85vh;
-    background-color: rgba(35, 39, 42, 0.5)
+    background-color: rgba(0,0,0, 0.6) !important;
 }
 
-nav#navigation {
-    width: 100%;
-    background-color: #23272A !important;
-    position: relative;
-    top: 0;
-    height: 10vh;
+.navbar-dark {
+    background-color: rgba(0,0,0, 0.7) !important;
+    border-bottom: 1px solid #000;
+    border-bottom-color: rgba(0,0,0,0.7) !important;
 }
 
 .inp {
     width: 50vh !important;
 }
+
+.searches {
+    border-bottom: none;
+    border-top: none;
+    z-index: 9999999999999;
+    width: 50vh !important;
+    margin: 0 auto;
+    background-color: rgba(0,0,0, 0.7) !important;
+
+  }
+  .searches div {
+    padding: 5px;
+    font-size: 0.9em;
+    margin: 0 0 5px 0;
+    z-index: 9999999999999;
+ 
+  }
+
+  .searches div a {
+
+    text-decoration: none;
+    color:orange;
+  }
+  .autocomplete-items div:hover {
+
+  }
+  .recent-search
+  {
+      cursor:initial !important;
+      
+  }
+
+  .recent-search:hover
+  {
+      background-color: rgba(0,0,0, 0.7) !important;
+      
+  }

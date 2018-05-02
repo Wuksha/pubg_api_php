@@ -1,15 +1,29 @@
 <?php
-include 'scripts/ChromePhp.php';
-require_once('scripts/httpReq.php');
-require_once('scripts/playerData.php');
-require_once('scripts/matchData.php');
+include 'php/ChromePhp.php';
+require_once('php/httpReq.php');
+require_once('php/playerData.php');
+require_once('php/matchData.php');
+require_once('php/Cookies.php');
 
-$page_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";  
-$link_array = explode('/',$page_link);
-$playerName = end($link_array);
+    $page_link = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";  
+    $link_array = explode('/',$page_link);
+    $playerName = end($link_array);
 
-$player = new playerData($playerName);
-$matches_array = $player->getData();
+    if(!Cookie::Exists("recentSearches"))
+            {
+                setcookie( "recentSearches", $playerName, time() + 36000, "/");
+            }
+            else 
+            {
+                $searches = $_COOKIE['recentSearches'];
+                $decoded = urldecode($searches);
+                $arr = explode(",", $decoded);
+                $x = Cookie::checkValue($arr, $playerName);
+                if($x != true)
+                setcookie("recentSearches", $searches.",".$playerName, time() + 36000, "/"); 
+            }
+    $player = new playerData($playerName);
+    $matches_array = $player->getData();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,10 +33,11 @@ $matches_array = $player->getData();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/userInsight.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../css/userInsight.css">
+    <script src="../js/Cookies.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,7 +50,7 @@ $matches_array = $player->getData();
         </div>
         <div class="mx-auto my-2 order-0 order-md-1 position-relative">
             <a class="mx-auto" href="#">
-                <img src="..\Resource\icon-pubg@2x.png" >
+                <img src="..\resources\pubg-icon.png" >
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                 <span class="navbar-toggler-icon"></span>
@@ -80,7 +95,7 @@ $matches_array = $player->getData();
                 $match = new matchData($matches_array["Match ".$i]);
                 $match_deatils = $match->getData();
                 ?>
-                <div class = "match col-lg-6" id = "Match <?php echo $i ?>" >
+                <div class = "match col-lg-6" data-match-number = "Match <?php echo $i ?>" >
                 <?php
                 $mode = $match_deatils['GameDetails']['gameMode'];
                 $map = $match_deatils['GameDetails']['mapName'];
@@ -134,16 +149,18 @@ $matches_array = $player->getData();
                 <?php 
                 echo "Game ".$i." mode: ".$mode;?>
                 </i>
-                <p class = "match-map">
+                <div class = "match-map">
                 Map: 
-                <a data-toggle="tooltip" title="<img src='<?php if($map == "Erangel_Main") { echo '../Resource/erangel_mini.png';}
-                else if ($map == "Desert_Main") { echo '../Resource/miramar-mini.png';} ?>' />">
+                <a data-toggle="tooltip" title="<img src='<?php if($map == "Erangel_Main") { echo '../resources/erangel_mini.png';}
+                else if ($map == "Desert_Main") { echo '../resources/miramar-mini.png';} ?>' />">
                 <span id="<?php if($map == "Erangel_Main") { echo 'map-er';}
                 else if ($map == "Desert_Main") { echo 'map-mi';} ?>"><?php if($map == "Erangel_Main") { echo 'Erangel';}
                 else if ($map == "Desert_Main") { echo 'Miramar';} ?></span></a>
-                </p>
+                </div>
                 <hr>
-                <p class = "matchStart"><?php $hm = ago($secs); echo $hm;?> </p>
+                <div class = "matchStart"><?php $hm = ago($secs); echo $hm;?> </div>
+                <div class = "matchDuration"><?php echo $duration; ?></div>
+                <div class = "match__rank">#<?php echo $rank; ?>/48</div>
                 </div>
                 
                 </div>
@@ -154,15 +171,6 @@ $matches_array = $player->getData();
         </div>
     </div>
 </section>
-
-<script>
-    $(document).ready(function() {
-        $('a[data-toggle="tooltip"]').tooltip({
-    animated: 'fade',
-    placement: 'bottom',
-    html: true
-});
-});
-</script>
+<script src="../js/jQuery.js"></script>
 </body>
 </html>
