@@ -24,6 +24,8 @@ class Telemetry {
                 $killer = $json_file[$i]['killer'];
                 $victim = $json_file[$i]['victim'];
                 $victim_data = ['killer' => $killer, 'victim' => $victim];
+                $json = json_encode($victim_data, JSON_PRETTY_PRINT);
+                print_r($json);
                 ChromePhp::log($victim_data);
                 return $victim_data;
                 break;
