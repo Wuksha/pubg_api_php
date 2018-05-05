@@ -25,7 +25,7 @@ require_once("phpInterfaces/IRequest.php");
      * @param string $api
      * @return void
      */
-	public function httpRequest($api, $url)
+	public function httpRequest($api, $url, $ex_message)
 	{
 		try {
 			$opts = array(
@@ -40,7 +40,7 @@ require_once("phpInterfaces/IRequest.php");
 			@$file = file_get_contents($url, false, $context);
 			if($file == false)
 			{
-				throw new Exception("Player unknown");
+				throw new Exception($ex_message);
 			
 			}
 				else 

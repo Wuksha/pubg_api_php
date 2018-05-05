@@ -16,14 +16,15 @@ class matchData {
 		try {
 
 			$api = new Authorization('https://api.playbattlegrounds.com/shards/pc-eu/matches/'.$this->matchID);
-			$json_file = $api->httpRequest($api->API_key, $api->api_url);
+			$json_file = $api->httpRequest($api->API_key, $api->api_url, "Match not found!");
 			if($api->authenticated == true)
 			{
 				$gameMode = $json_file['data']['attributes']['gameMode'];
 				$mapName = $json_file['data']['attributes']['mapName'];
 				$match_duration = $json_file['data']['attributes']['duration'];
 				$createdAt = $json_file['data']['attributes']['createdAt'];
-				$match_details = ['GameDetails' => ['gameMode' => $gameMode, 'mapName' => $mapName, 'matchDuration' => $match_duration, 'createdAt' => $createdAt]];
+				$rostersInMatch = count($json_file['data']['relationships']['rosters']['data']);
+				$match_details = ['GameDetails' => ['gameMode' => $gameMode, 'mapName' => $mapName, 'matchDuration' => $match_duration, 'numberOfTeams' => $rostersInMatch, 'createdAt' => $createdAt]];
 				foreach ($json_file['included'] as $key) 
 				{
 					

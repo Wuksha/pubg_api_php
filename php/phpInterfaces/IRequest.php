@@ -1,6 +1,6 @@
 <?php
 interface IRequest
 {
-    public function httpRequest($api, $url);
+    public function httpRequest($api, $url, $ex_message);
 }
 ?>

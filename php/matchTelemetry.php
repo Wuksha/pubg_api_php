@@ -1,5 +1,5 @@
 <?php
-
+require_once("ChromePhp.php");
 require_once("httpReq.php");
 
 class Telemetry {
@@ -14,8 +14,24 @@ class Telemetry {
 	{
 		try {
 
-			$api = new Authorization('https://telemetry-cdn.playbattlegrounds.com/bluehole-pubg/pc-eu/2018/04/15/15/33/601ebdc2-40c2-11e8-9295-0a58646d4810-telemetry.json');
-            $json_file = $api->httpRequest($api->API_key, $api->api_url);
+			$api = new Authorization('https://telemetry-cdn.playbattlegrounds.com/bluehole-pubg/pc-eu/2018/04/29/15/11/9bc26fce-4bbf-11e8-b00c-0a5864747914-telemetry.json');
+            $json_file = $api->httpRequest($api->API_key, $api->api_url, "Telemetry data not found!");
+            $i = 0;
+            foreach($json_file as $key)
+            {
+                if($json_file[$i]['_T'] == "LogPlayerKill" && $json_file[$i]['victim']['name'] == 'Wuksha')
+                {
+                $killer = $json_file[$i]['killer'];
+                $victim = $json_file[$i]['victim'];
+                $victim_data = ['killer' => $killer, 'victim' => $victim];
+                ChromePhp::log($victim_data);
+                return $victim_data;
+                break;
+                }
+        
+                $i++;
+            }
+
         }
 
         catch (Exception $e)

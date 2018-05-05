@@ -16,7 +16,7 @@ class playerData {
         try
         {
             $api = new Authorization("https://api.playbattlegrounds.com/shards/pc-eu/players?filter[playerNames]=".$this->playerName);
-            $json_file = $api->httpRequest($api->API_key, $api->api_url);
+            $json_file = $api->httpRequest($api->API_key, $api->api_url, "Player not found!");
 
             if($api->authenticated == true)
             {
@@ -35,12 +35,12 @@ class playerData {
 
             else 
             {
-
+            
             }
         }
         catch(Exception $ex)
         {
-
+            echo ($ex->getMessage());
         }
     }
 }

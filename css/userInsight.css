@@ -26,14 +26,54 @@ html, body {
 
 .match-box
 {
-    margin-top:25px;
-    border-radius: 5px;
-    background-color: #2C2F33;
+    margin-top:70px;
+    border-radius: 5px; 
     z-index: 999999999;
     color:rgb(246, 246, 246) !important;
     font-size: 0.85em;
+    height: 65%;
+}
+.match-s-info
+{
+    position: relative;
+    top: 2%;
+    width: 99%;
+    height: 100%;
+    left: 0.5%;
+    background-color: #2C2F33;
+    border-radius: 5px;
 }
 
+.left-section, .middle-section, .right-section
+{
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    width: 32.5%;
+}
+
+.middle-inner-section
+{
+    position: relative;
+    top: 15%;
+}
+
+.topten
+{
+    background-color: #7289DA !important;
+}
+.topten-n
+{
+    color: #7289DA !important;
+}
+.gold
+{
+    background-color: #e5c100 !important;
+}
+.gold-n
+{
+    color: #e5c100 !important;
+}
 .sp__mode--2-fpp {
     background-image: url(../resources/tag_duofpp.png);
     width: 52px;
@@ -52,7 +92,8 @@ html, body {
     margin-left: 10px;
     margin-top:10px;
     margin-bottom: 5px;
-    width:20%;
+    width:80%;
+    cursor: pointer;
 
 }
 #map-er{
@@ -69,7 +110,7 @@ html, body {
     margin-top: 5px;
     margin-left:10px;
     margin-bottom: 0;
-    width:20%;
+    width:80%;
 }
 .tooltip-inner {
     max-width: 320px;
@@ -90,16 +131,44 @@ hr {
     border-width: 0.5px 0;
     margin: 0 0;
     color:#4c4c4c;
-    width:20%;
+    width:100%;
   }
 
   .matchDuration {
     display: inline-block;
       margin-left: 10px;
-      padding-bottom:10px;
-      width:20%;
+  }
+  .c-chk-img
+  {
+    display: inline;
+    overflow: hidden;
+    width:30px !important;
+  }
+  .chk-img
+  {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  .match__rank {
+      display: block;
   }
 
-  .match__rank {
-      
+  span#m-rank
+  {
+      font-size: 1.50em !important;
   }
+
+  @media (max-width: 460px) 
+{
+.match-box
+{
+    margin-top: 30px;
+    height: 85% !important;
+}
+}
