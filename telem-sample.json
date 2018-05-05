@@ -1,0 +1,39 @@
+{
+    "attackId": 973079441,
+    "attacker": {
+       "name": "rizaRn1",
+       "teamId": 44,
+       "health": 0,
+       "location": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+       },
+       "ranking": 0,
+       "accountId": "account.c9e10364329748b1828d7b267759f6af"
+    },
+    "victim": {
+       "name": "Bimmel",
+       "teamId": 2,
+       "health": 0,
+       "location": {
+          "x": 439101.2,
+          "y": 281133.6,
+          "z": 5415.26
+       },
+       "ranking": 0,
+       "accountId": "account.3d14285b9929464d8cdaf977d3684258"
+    },
+    "damageTypeCategory": "Damage_Gun",
+    "damageReason": "HeadShot",
+    "damage": 0,
+    "damageCauserName": "WeapAK47_C",
+    "common": {
+       "matchId": "match.bro.official.2018-04.eu.duo-fpp.2018.04.29.f03994b3-99e7-4f72-95d5-18c3716fdf58",
+       "mapName": "Desert_Main",
+       "isGame": 0.1
+    },
+    "_V": 2,
+    "_D": "2018-04-29T14:40:05.539Z",
+    "_T": "LogPlayerTakeDamage"
+ }
